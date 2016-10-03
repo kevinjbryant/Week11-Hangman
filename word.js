@@ -1,43 +1,37 @@
-//build constructors that
 
 //list of letters object
 //a boolean that says if word is guessed or not
 // var LetterObjects = [];
 // var guessed = false;
-//display text function
-// loop through letterobject array
-// if (secret word.isGuessed) {
-// 	gameover}
+
  
-
-
 
 var letter = require('./letter.js');
 
 function Word(target) {
 	this.target = target;
-	this.lets = [];
+	this.letters = [];
 	this.found = false;
 
-	this.getLet = function() {
+	this.getLetter = function() {
 		for (var i=0; i < this.target.length; i++) {
-			this.lets.push( new letter(this.target[i]));
+			this.letters.push( new letter(this.target[i]));
 		}
 	};
 
 	this.findWord = function() {
-		this.found = this.lets.every(function(currLett) {
-			return currLett.appear;
+		this.found = this.letters.every(function(currentLetter) {
+			return currentLetter.appear;
 		});
 		return this.found;
 	};
 
-	this.checkLetter = function(guessLet) {
+	this.checkLetter = function(guessLetter) {
 		var toReturn = 0;
 
-		for (var i = 0; i < this.lets.length; i++) {
-			if (this.lets[i].charac == guessLet){
-				this.lets[i].appear = true;
+		for (var i = 0; i < this.letters.length; i++) {
+			if (this.letters[i].character == guessLetter){
+				this.letters[i].appear = true;
 				toReturn++;
 			}
 		}
@@ -46,8 +40,8 @@ function Word(target) {
 
 	this.wordRender = function() {
 		var string = '';
-		for (var i=0; i < this.lets.length; i++){
-			string += this.lets[i].letterRender();
+		for (var i=0; i < this.letters.length; i++){
+			string += this.letters[i].letterRender();
 		}
 		return string;
 	};

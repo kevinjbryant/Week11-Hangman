@@ -1,12 +1,11 @@
-//`main.js` will contain the logic of your app. Running it in Terminal/Bash will start the game.
+//main logic for game
 var Word = require('./word.js');
 var prompt = require('prompt');
 
 console.log("-----------------------------")
 console.log("Kev's Hangman Game!");
-console.log("Guess a letter");
+console.log("Guess a random letter");
 console.log("Topic motorcycles brands")
-console.log("Goodluck!");
 console.log("-----------------------------");
 prompt.start();
 
@@ -16,12 +15,12 @@ game = {
  	wordBank: ['kawasaki', 'honda', 'aprilia', 'suzuki', 'daytona', 'yamaha', 'ducati'],
  	wordsWon: 0,
  	guessesRemaining: 10,
- 	currentWrd: null,
+ 	currentWord: null,
  	
- 	startGame: function (wrd) {
+ 	startGame: function (word) {
  		this.resetGuesses();
- 		this.currentWrd = new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
- 		this.currentWrd.getLet();
+ 		this.currentWord = new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
+ 		this.currentWord.getLetter();
  		this.promptUser();
  	},
 
@@ -34,18 +33,23 @@ game = {
 
  	promptUser: function(){
  		var self = this;
- 		prompt.get(['guessLet'], function(err, result){
- 			console.log("You guessed: " + result.guessLet);
- 			var manyGuessed = self.currentWrd.checkLetter(result.guessLet);
+ 		prompt.get(['guessLetter'], function(err, result){
+ 			console.log("You guessed: " + result.guessLetter);
+ 			var manyGuessed = self.currentWord.checkLetter(result.guessLetter);
 
  			if(manyGuessed ==0) {
- 				console.log("WRONG");
+ 				console.log("      x   x");
+ 				console.log("       x x ");
+ 				console.log("      wrxng");
+ 				console.log("       x x ");
+ 				console.log("      x   x");
  				self.guessesRemaining--;
  				
  			} else {
  				console.log("CORRECT");
- 					if(self.currentWrd.findWord()){
+ 					if(self.currentWord.findWord()){
  						console.log("You won!");
+ 						console.log("The brand is: ", self.currentWord.target);
  						console.log("-------------------");
  	//					promptReset();
  						return;
@@ -54,13 +58,13 @@ game = {
 
  			console.log("Guesses remaining: " + self.guessesRemaining);
  			console.log("-------------------");
- 			if((self.guessesRemaining > 0) && (self.currentWrd.found == false)){
+ 			if((self.guessesRemaining > 0) && (self.currentWord.found == false)){
  				self.promptUser();
  			}
  			else if(self.guessesRemaining ==0){
- 				console.log("Game over. Correct Word ", self.currentWrd.target);
+ 				console.log("Game over. Correct brand is: ", self.currentWord.target);
  			} else {
- 				console.log(self.currentWrd.wordRender());
+ 				console.log(self.currentWord.wordRender());
  	//			promptReset();
  			}
  		});

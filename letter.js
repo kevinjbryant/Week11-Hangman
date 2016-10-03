@@ -2,11 +2,11 @@
 
 
 
-var letter = function(let){
-	this.charac = let;
+var letter = function(letter){
+	this.character = letter;
 	this.appear = false;
 	this.letterRender = function(){
-		return !(this.appear) ? "_" : this.charac;
+		return !(this.appear) ? "_" : this.character;
 	};
 };
 
